@@ -17,7 +17,8 @@ html {
 body {
   background-color: $base-bgcolor;
   color: $base-color;
-  font: $base-font-weight #{$base-font-size}/#{$base-line-height} $base-font-family, $base-font-family-fallback;
+  font: $base-font-weight #{$base-font-size}/#{$base-line-height} $base-font-family,
+  $base-font-family-fallback;
   margin: 0;
   min-height: 100%;
 }
@@ -43,8 +44,7 @@ body {
 
 .site {
 
-  &__main {
-  }
+  &__main {}
 
   &__logo {
     margin-bottom: 2rem;
@@ -146,4 +146,8 @@ a {
 
   }
 
+}
+
+.error {
+  color: tomato
 }

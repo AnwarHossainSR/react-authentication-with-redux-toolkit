@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { userLoginAction } from "../redux/actions/LoginAction";
 import "./Login.scss";
 const Login = () => {
+  const dispatch = useDispatch();
+  const { isLoading, error } = useSelector((state) => state.login);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(userLoginAction(email, password));
+  };
   return (
     <div className="align">
       <div className="grid align__item">
@@ -25,15 +35,24 @@ const Login = () => {
             />
           </svg>
           <h2>Login</h2>
-          <form action method="post" className="form">
+          <p className="error">{error && error}</p>
+          <form className="form" onSubmit={handleSubmit}>
             <div className="form__field">
-              <input type="email" placeholder="info@mailaddress.com" />
+              <input
+                type="email"
+                placeholder="info@mailaddress.com"
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
             <div className="form__field">
-              <input type="password" placeholder="••••••••••••" />
+              <input
+                type="password"
+                placeholder="••••••••••••"
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
             <div className="form__field">
-              <input type="submit" defaultValue="Sign Up" />
+              <input type="submit" value={isLoading ? "loading.." : "Login"} />
             </div>
           </form>
           <p>
