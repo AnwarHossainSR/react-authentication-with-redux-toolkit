@@ -1,6 +1,13 @@
 import React, { useState } from "react";
+import { CSVLink } from "react-csv";
 import { expenceData } from "../constant/data";
 import "./Products.scss";
+const headers = [
+  { label: "Job Id", key: "id" },
+  { label: "Customer Name", key: "name" },
+  { label: "Amount Due", key: "amount" },
+  { label: "Payment Status", key: "status" },
+];
 
 const Products = () => {
   const [data, setdata] = useState(expenceData);
@@ -22,6 +29,9 @@ const Products = () => {
           onChange={searchItem}
           placeholder="search...."
         />
+        <CSVLink data={data} headers={headers}>
+          Download me
+        </CSVLink>
       </div>
       <ul className="responsive-table">
         <li className="table-header">
