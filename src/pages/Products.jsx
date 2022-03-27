@@ -14,7 +14,11 @@ const Products = () => {
   const searchItem = (e) => {
     const search = e.target.value.toLowerCase();
     const newData = expenceData.filter((item) => {
-      return item.name.toLowerCase().includes(search);
+      return (
+        item.name.toLowerCase().includes(search) ||
+        item.status.toLowerCase().includes(search) ||
+        item.amount.toLowerCase().includes(search)
+      );
     });
     setdata(newData);
   };
