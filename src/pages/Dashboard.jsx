@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { userLogoutAction } from "../redux/actions/LoginAction";
 import { getUserAction } from "../redux/actions/UserAction";
-
+import "./Dashboard.scss";
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user);
+  const navigate = useNavigate();
   const handleLogout = () => {
     console.log("called from dashboard");
     dispatch(userLogoutAction());
@@ -13,12 +14,11 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(getUserAction());
   }, [dispatch]);
-  console.log(user);
   return (
     <div>
       <ul>
-        <li>Name :</li>
-        <li>Email :</li>
+        <li onClick={() => navigate("/")}>Home</li>
+        <li onClick={() => navigate("/products")}>Products</li>
         <li onClick={handleLogout}>Logout</li>
       </ul>
     </div>
