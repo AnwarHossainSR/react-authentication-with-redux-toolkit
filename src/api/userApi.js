@@ -3,7 +3,7 @@ import axios from "axios";
 export const userLogin = (email, password) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const res = await axios.post("http://localhost:4000/api/v1/login", {
+      const res = await axios.post("api/v1/login", {
         email,
         password,
       });
@@ -13,6 +13,7 @@ export const userLogin = (email, password) => {
       }
       resolve(res.data);
     } catch (error) {
+      console.log(error);
       reject(error.response.data);
     }
   });
@@ -21,9 +22,27 @@ export const userLogin = (email, password) => {
 export const userLogout = () => {
   return new Promise(async (resolve, reject) => {
     try {
-      const res = await axios.get("http://localhost:4000/api/v1/logout");
+      const res = await axios.get("api/v1/logout", {
+        headers: {
+          Authorization: `${localStorage.getItem("token")}`,
+        },
+      });
+      localStorage.clear();
+      sessionStorage.clear();
       resolve(res.data);
     } catch (error) {
+      reject(error.response.data);
+    }
+  });
+};
+
+export const getUserData = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await axios.get("api/v1/me");
+      resolve(res.data);
+    } catch (error) {
+      console.log(error.response);
       reject(error.response.data);
     }
   });

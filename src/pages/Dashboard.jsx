@@ -1,20 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { authLogout } from "../redux/reducers/LoginSlice";
+import { userLogoutAction } from "../redux/actions/LoginAction";
+import { getUserAction } from "../redux/actions/UserAction";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.login);
+  const { user } = useSelector((state) => state.user);
   const handleLogout = () => {
-    localStorage.clear();
-    dispatch(authLogout());
+    console.log("called from dashboard");
+    dispatch(userLogoutAction());
   };
-
+  useEffect(() => {
+    dispatch(getUserAction());
+  }, [dispatch]);
+  console.log(user);
   return (
     <div>
       <ul>
-        <li>Name :{user && user.name}</li>
-        <li>Email :{user && user.email}</li>
+        <li>Name :</li>
+        <li>Email :</li>
         <li onClick={handleLogout}>Logout</li>
       </ul>
     </div>

@@ -4,7 +4,6 @@ const initialState = {
   isLoading: false,
   isAuth: false,
   error: "",
-  user: {},
 };
 
 export const LoginSlice = createSlice({
@@ -14,10 +13,9 @@ export const LoginSlice = createSlice({
     authPending: (state) => {
       state.isLoading = true;
     },
-    authSuccess: (state, action) => {
+    authSuccess: (state) => {
       state.isLoading = false;
       state.isAuth = true;
-      state.user = action.payload;
       state.error = "";
     },
     authFailure: (state, action) => {

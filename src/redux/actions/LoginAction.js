@@ -5,6 +5,7 @@ import {
   authPending,
   authSuccess,
 } from "../reducers/LoginSlice";
+import { userPending } from "../reducers/UserSlice";
 
 export const userLoginAction = (email, password) => {
   return async (dispatch) => {
@@ -12,7 +13,7 @@ export const userLoginAction = (email, password) => {
     try {
       const res = await userLogin(email, password);
       if (res.success === true) {
-        dispatch(authSuccess(res.user));
+        dispatch(authSuccess());
         return true;
       }
     } catch (error) {
@@ -23,8 +24,9 @@ export const userLoginAction = (email, password) => {
 
 export const userLogoutAction = () => {
   return async (dispatch) => {
-    dispatch(authPending());
+    dispatch(userPending());
     try {
+      console.log("called from action");
       const res = await userLogout();
       if (res.success === true) {
         dispatch(authLogout());
