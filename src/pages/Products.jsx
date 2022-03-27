@@ -1,12 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
+import { expenceData } from "../constant/data";
 import "./Products.scss";
 
-const Products = ({ path }) => {
+const Products = () => {
+  const [data, setdata] = useState(expenceData);
+  const searchItem = (e) => {
+    const search = e.target.value.toLowerCase();
+    const newData = expenceData.filter((item) => {
+      return item.name.toLowerCase().includes(search);
+    });
+    setdata(newData);
+  };
+
   return (
     <div className="container">
       <div className="header">
         <h1 className="create-button">Create Product</h1>
-        <input type="text" className="search" placeholder="search...." />
+        <input
+          type="text"
+          className="search"
+          onChange={searchItem}
+          placeholder="search...."
+        />
       </div>
       <ul className="responsive-table">
         <li className="table-header">
@@ -15,62 +30,23 @@ const Products = ({ path }) => {
           <div className="col col-3">Amount Due</div>
           <div className="col col-4">Payment Status</div>
         </li>
-        <li className="table-row">
-          <div className="col col-1" data-label="Job Id">
-            42235
-          </div>
-          <div className="col col-2" data-label="Customer Name">
-            John Doe
-          </div>
-          <div className="col col-3" data-label="Amount">
-            $350
-          </div>
-          <div className="col col-4" data-label="Payment Status">
-            Pending
-          </div>
-        </li>
-        <li className="table-row">
-          <div className="col col-1" data-label="Job Id">
-            42442
-          </div>
-          <div className="col col-2" data-label="Customer Name">
-            Jennifer Smith
-          </div>
-          <div className="col col-3" data-label="Amount">
-            $220
-          </div>
-          <div className="col col-4" data-label="Payment Status">
-            Pending
-          </div>
-        </li>
-        <li className="table-row">
-          <div className="col col-1" data-label="Job Id">
-            42257
-          </div>
-          <div className="col col-2" data-label="Customer Name">
-            John Smith
-          </div>
-          <div className="col col-3" data-label="Amount">
-            $341
-          </div>
-          <div className="col col-4" data-label="Payment Status">
-            Pending
-          </div>
-        </li>
-        <li className="table-row">
-          <div className="col col-1" data-label="Job Id">
-            42311
-          </div>
-          <div className="col col-2" data-label="Customer Name">
-            John Carpenter
-          </div>
-          <div className="col col-3" data-label="Amount">
-            $115
-          </div>
-          <div className="col col-4" data-label="Payment Status">
-            Pending
-          </div>
-        </li>
+        {data &&
+          data.map((item, index) => (
+            <li className="table-row" key={index}>
+              <div className="col col-1" data-label="Job Id">
+                {item.id}
+              </div>
+              <div className="col col-2" data-label="Customer Name">
+                {item.name}
+              </div>
+              <div className="col col-3" data-label="Amount">
+                {item.amount}
+              </div>
+              <div className="col col-4" data-label="Payment Status">
+                {item.status}
+              </div>
+            </li>
+          ))}
       </ul>
     </div>
   );
