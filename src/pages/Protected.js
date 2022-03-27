@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { getUserAction } from "../redux/actions/UserAction";
@@ -8,12 +7,10 @@ const PrivateRoutes = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const { isAuth } = useSelector((state) => state.login);
-  useEffect(() => {
-    if (dispatch(getUserAction()) === true) {
-      dispatch(authSuccess());
-    }
-  }, [dispatch]);
-
+  if (dispatch(getUserAction()) === true) {
+    dispatch(authSuccess());
+  }
+  console.log(isAuth);
   return isAuth ? (
     <Outlet />
   ) : (

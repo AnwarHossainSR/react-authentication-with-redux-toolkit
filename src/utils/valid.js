@@ -1,8 +1,10 @@
-export const checkPassword = (email, password) => {
-  if (password.length < 6) {
-    return "Password must be at least 6 chars.";
-  } else if (validateEmail(email) === false) {
+export const validate = (email, password) => {
+  if (validateEmail(email) === false || email.length < 1) {
     return "Email is not valid.";
+  } else if (password.length < 6) {
+    return "Password must be at least 6 chars.";
+  } else {
+    return true;
   }
 };
 

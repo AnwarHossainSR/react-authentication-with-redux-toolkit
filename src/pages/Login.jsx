@@ -11,7 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await dispatch(userLoginAction(email, password));
+    dispatch(userLoginAction(email, password));
   };
   useEffect(() => {
     if (isAuth) navigate("/dashboard");

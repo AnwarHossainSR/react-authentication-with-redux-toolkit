@@ -1,4 +1,5 @@
 import { userLogin, userLogout } from "../../api/userApi";
+import { validate } from "../../utils/valid";
 import {
   authFailure,
   authLogout,
@@ -11,10 +12,16 @@ export const userLoginAction = (email, password) => {
   return async (dispatch) => {
     dispatch(authPending());
     try {
-      const res = await userLogin(email, password);
-      if (res.success === true) {
-        dispatch(authSuccess());
-        return true;
+      const isValid = validate(email, password);
+      if (isValid === true) {
+        const res = await userLogin(email, password);
+        if (res.success === true) {
+          dispatch(authSuccess());
+          return true;
+        }
+      } else {
+        dispatch(authFailure(isValid));
+        return false;
       }
     } catch (error) {
       dispatch(authFailure(error.message));
