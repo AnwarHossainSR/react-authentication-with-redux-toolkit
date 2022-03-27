@@ -1,17 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { userLoginAction } from "../redux/actions/LoginAction";
 import "./Login.scss";
 const Login = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLoading, error } = useSelector((state) => state.login);
+  const { isLoading, error, isAuth } = useSelector((state) => state.login);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(userLoginAction(email, password));
+    await dispatch(userLoginAction(email, password));
   };
+  useEffect(() => {
+    if (isAuth) navigate("/dashboard");
+  }, [isAuth, navigate]);
+
   return (
     <div className="align">
       <div className="grid align__item">
